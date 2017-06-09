@@ -30,6 +30,251 @@ def beTheList(text):
 def beTheQuote(text):
     return "<blockquote class = \"style2\">" + text + "</blockquote>"
 
+## LL language judge is there has strong
+def hasStrong(test):
+    ll = {
+        'S': ['ABABA', 'ABABA'],
+        'A': ['aA', '*'],
+        'B': ['e', '**']
+    }
+
+    zhan = ['S']
+    start = 0
+    num = ''
+    indice = 0
+
+    while(len(zhan) > 0):
+        s = zhan.pop(0)
+        # when test has analysed completely
+        if start > (len(test) - 1):
+            if s == 'A' and len(zhan) <= 1:
+                return True
+            else:
+                return False
+
+        # switch the chinese or other charater to a or *
+        if test[start] == '*':
+            num = '*'
+            indice = 1
+        else:
+            num = 'a'
+            indice = 0
+
+        # do the offset
+        if s == num:
+            start = start + 1
+
+        elif s == 'A' and indice == 1:
+            if start + 1 > (len(test) - 1):
+                pass
+                # print('A -> e')
+            elif test[start + 1] == '*':
+                pass
+                # print('A -> e')
+            else:
+                zhan.insert(0, 'A')
+                zhan.insert(0, '*')
+                # print('A -> *')
+
+    
+        elif ll[s][indice] != 'e':
+            # print(s, ' ->', ll[s][indice])
+            for i in range(len(ll[s][indice]) - 1, -1, -1):
+                zhan.insert(0, ll[s][indice][i])
+
+        # not match the language
+        else:
+            return False
+    return True
+
+def handleStrong(test):
+    match = 0
+    while(test.find('**') != -1):
+        pos = test.find('**')
+        if match % 2 == 0:
+            if pos + 2 < len(test):
+                test = test[: pos] + '<strong>' + test[pos + 2:]
+                match = match + 1
+            else:
+                test = test[: pos] + '<strong>'
+                match = match + 1
+        elif match % 2 == 1:
+            if pos + 2 < len(test):
+                test = test[: pos] + '</strong>' + test[pos + 2:]
+                match = match + 1
+            else:
+                test = test[: pos] + '</strong>'
+                match = match + 1
+    if match % 2 == 1:
+        if pos + 8 < len(test):
+            test = test[: pos] + '**' + test[pos + 8:]
+        else:
+            test = test[: pos] + '**'
+    return test
+
+## LL language judge is there has underline
+def hasUnderline(test):
+    ll = {
+        'S': ['ABABA', 'ABABA'],
+        'A': ['aA', '+'],
+        'B': ['e', '++']
+    }
+
+    zhan = ['S']
+    start = 0
+    num = ''
+    indice = 0
+
+    while(len(zhan) > 0):
+        s = zhan.pop(0)
+        # when test has analysed completely
+        if start > (len(test) - 1):
+            if s == 'A' and len(zhan) <= 1:
+                return True
+            else:
+                return False
+
+        # switch the chinese or other charater to a or *
+        if test[start] == '+':
+            num = '+'
+            indice = 1
+        else:
+            num = 'a'
+            indice = 0
+
+        # do the offset
+        if s == num:
+            start = start + 1
+
+        elif s == 'A' and indice == 1:
+            if start + 1 > (len(test) - 1):
+                pass
+                # print('A -> e')
+            elif test[start + 1] == '+':
+                pass
+                # print('A -> e')
+            else:
+                zhan.insert(0, 'A')
+                zhan.insert(0, '+')
+                # print('A -> *')
+
+    
+        elif ll[s][indice] != 'e':
+            # print(s, ' ->', ll[s][indice])
+            for i in range(len(ll[s][indice]) - 1, -1, -1):
+                zhan.insert(0, ll[s][indice][i])
+
+        # not match the language
+        else:
+            return False
+    return True
+
+def handleUnderline(test):
+    match = 0
+    while(test.find('++') != -1):
+        pos = test.find('++')
+        if match % 2 == 0:
+            if pos + 2 < len(test):
+                test = test[: pos] + '<u>' + test[pos + 2:]
+                match = match + 1
+            else:
+                test = test[: pos] + '<u>'
+                match = match + 1
+        elif match % 2 == 1:
+            if pos + 2 < len(test):
+                test = test[: pos] + '<u>' + test[pos + 2:]
+                match = match + 1
+            else:
+                test = test[: pos] + '</u>'
+                match = match + 1
+    if match % 2 == 1:
+        if pos + 8 < len(test):
+            test = test[: pos] + '++' + test[pos + 3:]
+        else:
+            test = test[: pos] + '++'
+    return test
+
+## LL language judge is there has underline
+def hasBackground(test):
+    ll = {
+        'S': ['ABABA', 'ABABA'],
+        'A': ['aA', '='],
+        'B': ['e', '==']
+    }
+
+    zhan = ['S']
+    start = 0
+    num = ''
+    indice = 0
+
+    while(len(zhan) > 0):
+        s = zhan.pop(0)
+        # when test has analysed completely
+        if start > (len(test) - 1):
+            if s == 'A' and len(zhan) <= 1:
+                return True
+            else:
+                return False
+
+        # switch the chinese or other charater to a or *
+        if test[start] == '=':
+            num = '='
+            indice = 1
+        else:
+            num = 'a'
+            indice = 0
+
+        # do the offset
+        if s == num:
+            start = start + 1
+
+        elif s == 'A' and indice == 1:
+            if start + 1 > (len(test) - 1):
+                pass
+                # print('A -> e')
+            elif test[start + 1] == '=':
+                pass
+                # print('A -> e')
+            else:
+                zhan.insert(0, 'A')
+                zhan.insert(0, '=')
+                # print('A -> *')
+
+    
+        elif ll[s][indice] != 'e':
+            # print(s, ' ->', ll[s][indice])
+            for i in range(len(ll[s][indice]) - 1, -1, -1):
+                zhan.insert(0, ll[s][indice][i])
+
+        # not match the language
+        else:
+            return False
+    return True
+
+def handleBackground(test):
+    match = 0
+    while(test.find('==') != -1):
+        pos = test.find('==')
+        if match % 2 == 0:
+            if pos + 2 < len(test):
+                test = test[: pos] + '<strong style = \"background:red\">' + test[pos + 2:]
+                match = match + 1
+            else:
+                test = test[: pos] + '<strong style = \"background:red\">'
+                match = match + 1
+        elif match % 2 == 1:
+            if pos + 2 < len(test):
+                test = test[: pos] + '</strong>' + test[pos + 2:]
+                match = match + 1
+            else:
+                test = test[: pos] + '</strong>'
+                match = match + 1
+    if match % 2 == 1:
+        if pos + 8 < len(test):
+            test = test[: pos] + '++' + test[pos + 33:]
+        else:
+            test = test[: pos] + '++'
+    return test
 
 # normal block, such as:
 # 0. paragraph
@@ -38,6 +283,12 @@ def beTheQuote(text):
 # 3. list
 # 4. quote
 def roughParse(eachLine):
+    if hasStrong(eachLine):
+        eachLine = handleStrong(eachLine)
+    if hasUnderline(eachLine):
+        eachLine = handleUnderline(eachLine)
+    if hasBackground(eachLine):
+        eachLine = handleBackground(eachLine)
     # title
     if eachLine[: 2] == "# ":
         return beTheTitle(eachLine[2 :], 1)
